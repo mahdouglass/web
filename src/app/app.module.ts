@@ -2,8 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
-import { AppComponent } from './app.component';
 import { AngularFireModule } from 'angularfire2';
 import { QuoteServiceService } from './quote-service.service';
 import { RouterModule, Routes} from '@angular/router';
@@ -12,6 +10,7 @@ import { AddQuoteComponentComponent } from './add-quote-component/add-quote-comp
 import { ListQuoteComponentComponent } from './list-quote-component/list-quote-component.component';
 import { QuoteComponent } from './quote/quote.component';
 import { ImageService } from "./image.service";
+import {AppComponent} from "./app.component";
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyCFn5hwCZRxOsl2GZ2x7HNCu-eFEmDZQxE',
