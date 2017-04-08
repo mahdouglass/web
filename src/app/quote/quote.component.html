@@ -1,0 +1,7 @@
+<div id="bg" *ngIf="quote && background" [style.background-color]="background">
+  <div id="miggy" [style.background-image]="image"></div>
+  <div id="miggyism" *ngIf="quote">{{quote.text}}</div>
+</div>
+<button id="refresh" (click)="getRandomQuote()"></button>
+<button id="admin" [routerLink]="['/admin']"></button>
+<button id="up" (click)="upVoteQuote()" [disabled]="isUpVoted"></button>

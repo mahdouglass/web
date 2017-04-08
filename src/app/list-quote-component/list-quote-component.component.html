@@ -1,0 +1,31 @@
+<div class="panel">
+  <button class="btn btn-link" [routerLink]="['/']"><- Back to Miggyisms</button>
+  <div class="table table-responsive table-striped">
+    <div class="row" *ngFor="let quote of quotes">
+      <div class="col-10">
+        <button class="btn btn-link" (click)="editQuoteObject(quote)">{{quote.text}}</button>
+      </div>
+      <div class="col-2 text-right">{{quote.votes}}</div>
+    </div>
+  </div>
+  <div class="row" *ngIf="editQuote">
+    <div class="col-10">
+      <input class="form-control" type="text" [(ngModel)]="editQuote.text"/>
+    </div>
+    <div class="col-2">
+      <input class="form-control" type="number" [(ngModel)]="editQuote.votes"/>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 30px;" *ngIf="editQuote">
+    <div class="col-4 col-md-2">
+      <button class="btn btn-block btn-success" (click)="updateQuote()">Save</button>
+    </div>
+    <div class="col-4 col-md-2">
+      <button class="btn btn-block btn-danger" (click)="removeQuote()">Delete</button>
+    </div>
+    <div class="col-4 col-md-2">
+      <button class="btn btn-block" (click)="cancelEditQuote()">Cancel</button>
+    </div>
+  </div>
+  <app-add-quote-component *ngIf="!this.editQuote"></app-add-quote-component>
+</div>
