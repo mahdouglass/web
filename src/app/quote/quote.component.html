@@ -2,6 +2,8 @@
   <div id="miggy" [style.background-image]="image"></div>
   <div id="miggyism" *ngIf="quote">{{quote.text}}</div>
 </div>
-<button id="refresh" (click)="getRandomQuote()"></button>
-<button id="admin" [routerLink]="['/admin']"></button>
+<button id="refresh" (click)="getQuotes(true)"></button>
+<button id="share" ngxClipboard [cbContent]="urlLink" [disabled]="isCopied1" (cbOnSuccess)="isCopied1 = true"></button>
+<button id="admin" routerLink="/admin"></button>
 <button id="up" (click)="upVoteQuote()" [disabled]="isUpVoted"></button>
+<input hidden="true" type="text" [(ngModel)]="urlLink" #url/>

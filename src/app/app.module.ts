@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
 import { QuoteServiceService } from './quote-service.service';
 import { RouterModule, Routes} from '@angular/router';
@@ -9,8 +11,11 @@ import { RouterModule, Routes} from '@angular/router';
 import { AddQuoteComponentComponent } from './add-quote-component/add-quote-component.component';
 import { ListQuoteComponentComponent } from './list-quote-component/list-quote-component.component';
 import { QuoteComponent } from './quote/quote.component';
-import { ImageService } from "./image.service";
-import {AppComponent} from "./app.component";
+import { ImageService } from './image.service';
+import {AppComponent} from './app.component';
+import {AngularFireDatabaseModule} from "angularfire2/database/database.module";
+import {AngularFireAuthModule} from "angularfire2/auth/auth.module";
+import { ClipboardModule } from 'ngx-clipboard';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyCFn5hwCZRxOsl2GZ2x7HNCu-eFEmDZQxE',
@@ -27,20 +32,25 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    ClipboardModule
+],
   declarations: [
     AppComponent,
     ListQuoteComponentComponent,
     QuoteComponent,
     AddQuoteComponentComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    RouterModule.forRoot(appRoutes),
-    AngularFireModule.initializeApp(firebaseConfig)
-  ],
   providers: [ QuoteServiceService, ImageService],
   bootstrap: [AppComponent]
-})
+},
+
+)
 export class AppModule { }

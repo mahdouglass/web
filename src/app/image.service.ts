@@ -1,29 +1,33 @@
 import { Injectable } from '@angular/core';
-import {AngularFire, FirebaseListObservable} from "angularfire2";
-import {ImageModel} from "./image-model";
+import {ImageModel} from './image-model';
+import { AngularFireDatabase } from 'angularfire2/database';
+import {AngularFireList} from "angularfire2/database/interfaces";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class ImageService {
-  imageItems: FirebaseListObservable<any[]>;
+  imageRef: AngularFireList<any>;
+  imageItems: Observable<any[]>;
 
-  constructor(private angularFire: AngularFire) { }
+  constructor(private angularFire: AngularFireDatabase) { }
 
   getImages(){
-    return this.imageItems = this.angularFire.database.list('/images');
+    this.imageRef = this.angularFire.list('/images');
+    return this.imageItems = this.imageRef.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    });
   }
 
   updateImage(image: any){
-    this.imageItems = this.getImages();
-    this.imageItems.update(image.$key, {path: image.path, votes: image.votes});
+    this.imageRef.update(image.key, {path: image.path, votes: image.votes});
   }
 
-  removeImage(image){
-    this.imageItems= this.getImages();
-    this.imageItems.remove(image.$key);
+  removeImage(image: any){
+    this.imageRef.remove(image.key);
   }
 
-  addImage (images: FirebaseListObservable<any []>, image: ImageModel){
-    images.push(image);
+  addImage (image: ImageModel){
+    this.imageRef.push(image);
   }
 
 }

@@ -1,35 +1,36 @@
 import { Injectable } from '@angular/core';
-import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
-import {QuoteModel} from "./quote-model";
+import { AngularFireDatabase } from 'angularfire2/database';
+import {AngularFireList} from "angularfire2/database/interfaces";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class QuoteServiceService {
-  quoteItems: FirebaseListObservable<any[]>;
+  quoteRef: AngularFireList<any>;
+  quoteItems: Observable<any[]>;
 
-  constructor(private angularFire: AngularFire) { }
+  constructor(private angularFire: AngularFireDatabase) { }
 
   getQuotes(){
-    return this.quoteItems = this.angularFire.database.list('/quotes');
+    this.quoteRef = this.angularFire.list('/quotes');
+    return this.quoteItems = this.quoteRef.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    });
   }
 
   updateQuote(quote: any){
-    this.quoteItems = this.getQuotes();
-    this.quoteItems.update(quote.$key, {text: quote.text, votes: quote.votes});
+    this.quoteRef.update(quote.key, {text: quote.text, votes: quote.votes});
   }
 
   upVoteQuote(quote: any){
-    this.quoteItems = this.getQuotes();
-    this.quoteItems.update(quote.$key, {votes: parseInt(quote.votes)+1});
+    this.quoteRef.update(quote.key, {votes: (parseInt(quote.votes)+1)});
   }
 
   removeQuote(quote: any){
-    this.quoteItems = this.getQuotes();
-    this.quoteItems.remove(quote.$key);
+    this.quoteRef.remove(quote.key);
   }
 
   addQuote (quote: any){
-    this.quoteItems = this.getQuotes();
-    this.quoteItems.push(quote);
+    this.quoteRef.push(quote);
   }
 
 }
