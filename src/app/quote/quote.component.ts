@@ -40,7 +40,7 @@ export class QuoteComponent implements OnInit {
         this.quoteId = +params['quoteId'];
         this.imageId = +params['imageId'];
         this.backgroundId = +params['backgroundId'];
-        this.inSpace = +params['inSpace'];
+        this.inSpace = +params['inSpace'] === 1 ? true : false;
       });
 
     if(this.inSpace){
