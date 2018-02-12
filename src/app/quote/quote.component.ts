@@ -22,6 +22,7 @@ export class QuoteComponent implements OnInit {
   quoteId: number;
   imageId: number;
   backgroundId: number;
+  inSpace: boolean;
   randomQuoteInt = 0;
   randomBackgroundInt = 0;
   randomImageInt = 0;
@@ -33,19 +34,31 @@ export class QuoteComponent implements OnInit {
 
   ngOnInit() {
     this.urlLink = window.location.href;
-    this.backgrounds = [
-      '#c46a20',
-      '#c4201f',
-      '#bec229',
-      '#7fa114'
-    ];
 
     this.route.queryParams
       .subscribe(params => {
         this.quoteId = +params['quoteId'];
         this.imageId = +params['imageId'];
         this.backgroundId = +params['backgroundId'];
+        this.inSpace = +params['inSpace'];
       });
+
+    if(this.inSpace){
+      this.backgrounds = [
+        `https://res.cloudinary.com/flannelware/image/upload/TheCubanBackgrounds/explosion.gif`,
+        `https://res.cloudinary.com/flannelware/image/upload/TheCubanBackgrounds/stars.gif`,
+        `https://res.cloudinary.com/flannelware/image/upload/TheCubanBackgrounds/solar.gif`,
+        `https://res.cloudinary.com/flannelware/image/upload/TheCubanBackgrounds/explosion.gif`,
+      ];
+    }
+    else {
+      this.backgrounds = [
+        '#c46a20',
+        '#c4201f',
+        '#bec229',
+        '#7fa114'
+      ];
+    }
 
     this.getImages();
     this.getQuotes(this.quoteId ? false : true);
@@ -70,7 +83,7 @@ export class QuoteComponent implements OnInit {
         this.router.navigate(['.'], { queryParams: queryParams });
 
         this.quote = this.quotes[this.quoteId];
-        this.background = this.backgrounds[this.backgroundId];
+        this.background = this.inSpace ? `url(${this.backgrounds[this.backgroundId]})` : this.backgrounds[this.backgroundId];
         this.image = `url(${this.images[this.imageId].path})`;
       });
   }
