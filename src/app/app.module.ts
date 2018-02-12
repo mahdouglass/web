@@ -13,8 +13,8 @@ import { ListQuoteComponentComponent } from './list-quote-component/list-quote-c
 import { QuoteComponent } from './quote/quote.component';
 import { ImageService } from './image.service';
 import {AppComponent} from './app.component';
-import {AngularFireDatabaseModule} from "angularfire2/database/database.module";
-import {AngularFireAuthModule} from "angularfire2/auth/auth.module";
+import {AngularFireDatabaseModule} from "angularfire2/database";
+import {AngularFireAuthModule} from "angularfire2/auth";
 import { ClipboardModule } from 'ngx-clipboard';
 
 export const firebaseConfig = {
