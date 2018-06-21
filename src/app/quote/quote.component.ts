@@ -4,7 +4,7 @@ import {QuoteModel} from '../quote-model';
 import {ImageService} from '../image.service';
 import { ActivatedRoute, Router, Params} from '@angular/router';
 import fontawesome from '@fortawesome/fontawesome';
-import { first, filter } from 'rxjs/operators';
+import { first, filter, map } from 'rxjs/operators';
 import {faSyncAlt, faThumbsUp, faCommentAlt, faCopy} from "@fortawesome/fontawesome-free-solid";
 
 @Component({
@@ -98,7 +98,6 @@ export class QuoteComponent implements OnInit {
   getImages() {
     this.imageService.getImages()
       .subscribe(images => {
-        console.log(images);
         this.images = images;
       });
   }

@@ -5,9 +5,7 @@
 <div id="bg" *ngIf="quote && background && inSpace" style="background-color: #333">
   <div id="miggybg" [style.background-image]="background">
     <div id="miggy" [style.background-image]="image"></div>
-    <div id="miggyism" *ngIf="quote">
-      <i class="fas fa-camera"></i>
-      {{quote.text}}</div>
+    <div id="miggyism" *ngIf="quote"> {{quote.text}}</div>
   </div>
 </div>
 <button id="refresh" (click)="getQuotes(true)" title="Refresh Miggyism"><i class="fas fa-2x fa-sync-alt"></i></button>
