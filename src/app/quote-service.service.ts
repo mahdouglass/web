@@ -17,6 +17,13 @@ export class QuoteServiceService {
     });
   }
 
+  getMigIpsum(){
+    this.quoteRef = this.angularFire.list('/quotes');
+    return this.quoteItems = this.quoteRef.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    });
+  }
+
   updateQuote(quote: any){
     this.quoteRef.update(quote.key, {text: quote.text, votes: quote.votes});
   }

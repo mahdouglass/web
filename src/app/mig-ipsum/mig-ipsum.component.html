@@ -1,0 +1,16 @@
+<div id="title">MigIpsum</div>
+<div id="bg" *ngIf="migIpsum && background && !inSpace" [style.background-color]="background">
+  <div id="miggy" [style.background-image]="image"></div>
+  <div id="miggyism" *ngIf="migIpsum" [innerHtml]="migIpsum | safe: 'html'"></div>
+</div>
+<div id="bg" *ngIf="migIpsum && background && inSpace" style="background-color: #333">
+  <div id="miggybg" [style.background-image]="background">
+    <div id="miggy" [style.background-image]="image"></div>
+    <div id="miggyism" *ngIf="migIpsum" [innerHtml]="migIpsum | safe: 'html'"></div>
+  </div>
+</div>
+<button id="refresh" (click)="getMigIpsum(true)" title="Refresh MigIpsum"><i class="fas fa-2x fa-sync-alt"></i></button>
+<button id="share" ngxClipboard [cbContent]="migIpsum" [disabled]="isCopied1" (cbOnSuccess)="isCopied1 = true" title="Copy MigIpsum to Clipboard"><i class="fas fa-2x fa-copy"></i></button>
+<button id="admin" routerLink="/admin" title="Manage Miggyisms"><i class="fas fa-2x fa-wrench"></i></button>
+<button id="ipsum" routerLink="/" title="Miggyisms"><i class="fas fa-2x fa-comment-dots"></i></button>
+<input hidden="true" type="text" [(ngModel)]="migIpsum" #url/>

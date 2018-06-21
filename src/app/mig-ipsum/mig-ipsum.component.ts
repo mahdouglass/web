@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {SafePipe} from '../safe.pipe';
 import {QuoteServiceService} from '../quote-service.service';
 import {QuoteModel} from '../quote-model';
 import {ImageService} from '../image.service';
@@ -9,19 +10,20 @@ import {faSyncAlt, faThumbsUp, faCommentAlt, faCopy} from "@fortawesome/fontawes
 
 @Component({
   selector: 'app-root',
-  templateUrl: './quote.component.html',
-  styleUrls: ['./quote.component.css']
+  templateUrl: './mig-ipsum.component.html',
+  styleUrls: ['./mig-ipsum.component.css']
 })
-export class QuoteComponent implements OnInit {
+export class MigIpsumComponent implements OnInit {
   images = Array();
   backgrounds = Array();
   quotes: any[];
+  migIpsum: string;
   isUpVoted: boolean;
 
   background: string;
   image: string;
-  quote: QuoteModel;
-  quoteId: number;
+  quote: any;
+  paragraphs: number;
   imageId: number;
   backgroundId: number;
   inSpace: boolean;
@@ -40,11 +42,10 @@ export class QuoteComponent implements OnInit {
 
   ngOnInit() {
     this.urlLink = window.location.href;
-    this.isCopied1 = false;
 
     this.route.queryParams
       .subscribe(params => {
-        this.quoteId = +params['quoteId'];
+        this.paragraphs = +params['paragraphs'];
         this.imageId = +params['imageId'];
         this.backgroundId = +params['backgroundId'];
         this.inSpace = +params['inSpace'] === 1 ? true : false;
@@ -68,28 +69,47 @@ export class QuoteComponent implements OnInit {
     }
 
     this.getImages();
-    this.getQuotes(this.quoteId ? false : true);
+    this.getMigIpsum(this.paragraphs ? false : true);
   }
 
-  getQuotes(random: boolean) {
+  getMigIpsum(random: boolean) {
+    this.isCopied1 = false;
     this.isUpVoted = false;
-    this.quoteService.getQuotes()
+    this.quoteService.getMigIpsum()
       .subscribe(quotes => {
         this.quotes = quotes;
+        this.migIpsum = null;
 
         if(random) {
-          this.quoteId = this.getRandomInt(this.quotes.length, this.randomQuoteInt);
+          this.paragraphs = this.getRandomInt(7, 0);
           this.backgroundId = this.getRandomInt(this.backgrounds.length, this.randomBackgroundInt);
           this.imageId = this.getRandomInt(this.images.length, this.randomImageInt);
         }
 
         const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
-        queryParams['quoteId'] = this.quoteId;
+        queryParams['paragraphs'] = this.paragraphs;
         queryParams['imageId'] = this.imageId;
         queryParams['backgroundId'] = this.backgroundId;
-        this.router.navigate(['.'], { queryParams: queryParams });
+        this.router.navigate(['/mig-ipsum'], { queryParams: queryParams });
 
-        this.quote = this.quotes[this.quoteId];
+        for(var x = 0; x < this.paragraphs; x++) {
+          for (var i = 0; i <= this.getRandomInt(this.quotes.length, this.randomQuoteInt); i++) {
+            this.quote = this.quotes[this.getRandomInt(this.quotes.length, 0)].text;
+
+            if (this.migIpsum) {
+              //this.quote = this.omitDupeQuote(this.migIpsum, this.quote);
+            }
+
+            if (this.quote) {
+              this.quote = this.sanitizeQuote(this.quote);
+
+              this.migIpsum =  `${this.migIpsum ? this.migIpsum : ''}${i != 0 ? ' ':''}${this.quote}`;
+            }
+          }
+
+          this.migIpsum = `${this.migIpsum}<br /><br />`;
+        }
+
         this.background = this.inSpace ? `url(${this.backgrounds[this.backgroundId]})` : this.backgrounds[this.backgroundId];
         this.image = `url(${this.images[this.imageId].path})`;
       });
@@ -98,7 +118,6 @@ export class QuoteComponent implements OnInit {
   getImages() {
     this.imageService.getImages()
       .subscribe(images => {
-        console.log(images);
         this.images = images;
       });
   }
@@ -109,13 +128,20 @@ export class QuoteComponent implements OnInit {
   }
 
   getShareLink() {
-
     this.isUpVoted = true;
   }
 
   getRandomInt(max: number, current: number) {
     const random = Math.floor(Math.random() * (max - 1)) + 1;
     return current != random ? random : 0;
+  }
+
+  omitDupeQuote(paragraph: string, quote: string){
+    return paragraph.indexOf(quote) < 0 ? quote : null;
+  }
+
+  sanitizeQuote(quote: string){
+    return quote.match("[.?!]") ? quote : `${quote}.`;
   }
 
 }

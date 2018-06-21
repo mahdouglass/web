@@ -1,0 +1,149 @@
+body {
+  background-color: #000;
+}
+#bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #333;
+  transition-duration: 0.05s;
+}
+#miggy {
+  position: absolute;
+  top: 50px;
+  left: 200px;
+  right: 0;
+  height: 300px;
+  width: 300px;
+  border-radius: 50%;
+  background-color: #fff;
+  background-size: cover;
+  box-shadow: 0px 25px 25px rgba(0,0,0,0.1);
+}
+#title{
+  position: absolute;
+  top: 125px;
+  left: 535px;
+  color: white;
+  font-size: 50px;
+  font-family: "Georgia" !important;
+  font-weight: bold;
+  z-index: 100;
+}
+#miggyism {
+  position: absolute;
+  top: 200px;
+  left: 535px;
+  min-height: 400px;
+  max-width: 1000px;
+  width: auto;
+  padding: 15px;
+  font-family: "Georgia" !important;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 34px;
+  border-radius: 32px;
+  background-color: #fff;
+  box-shadow: 0px 25px 25px rgba(0,0,0,0.1);
+}
+#miggybg {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  height: 600px;
+  width: 600px;
+  background-position: center;
+  background-size:cover;
+  border-radius: 50%;
+  background-color: #fff;
+  background-size: cover;
+  box-shadow: 0px 25px 25px rgba(0,0,0,0.1);
+}
+#miggyism:before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: -30px;
+  height: 0px;
+  width: 0px;
+  border-top: 30px solid #fff;
+  border-right: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-left: 30px solid transparent;
+}
+button#refresh,
+button#share,
+button#admin,
+button#ipsum,
+button#up {
+  position: absolute;
+  right: 75px;
+  height: 75px;
+  width: 75px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: white;
+  transition-duration: 0.5s;
+}
+button#refresh {
+  bottom: 75px;
+  background-color: #00a09e;
+  box-shadow: 0px 25px 25px rgba(0,0,0,0.1);
+}
+button#admin,
+button#share,
+button#ipsum,
+button#up {
+  background-color: transparent;
+  box-shadow: none;
+  opacity: 0.33;
+}
+button#ipsum{
+  top: 160px;
+}
+button#admin {
+  top: 75px;
+}
+button#share{
+  bottom: 160px;
+}
+button#up {
+  bottom: 245px;
+}
+button#up:disabled,
+button#share:disabled {
+  color: #bbb;
+  transform: scale(1);
+  background-color: #888 !important;
+  opacity: 1;
+  cursor: not-allowed;
+}
+button#refresh:hover,
+button#ipsum:hover,
+button#admin:hover,
+button#share:hover,
+button#up:not(:disabled):hover {
+  transform: scale(1.1);
+  background-color: #0bb8b6;
+  box-shadow: 0px 25px 25px rgba(0,0,0,0.1);
+  transition-duration: 0.1s;
+  opacity: 1;
+}
+button#refresh:active,
+button#admin:active,
+button#share:active,
+button#ipsum:active,
+button#up:active {
+  box-shadow: none;
+  transform: scale(0.9);
+  transition-duration: 0s;
+}

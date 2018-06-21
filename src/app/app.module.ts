@@ -14,6 +14,8 @@ import {AppComponent} from './app.component';
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import { ClipboardModule } from 'ngx-clipboard';
+import { MigIpsumComponent } from './mig-ipsum/mig-ipsum.component';
+import { SafePipe } from './safe.pipe';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyCFn5hwCZRxOsl2GZ2x7HNCu-eFEmDZQxE',
@@ -25,6 +27,7 @@ export const firebaseConfig = {
 };
 
 const appRoutes: Routes = [
+  { path: 'mig-ipsum', component: MigIpsumComponent},
   { path: 'admin', component: ListQuoteComponentComponent},
   { path: '', component: QuoteComponent},
 ];
@@ -44,7 +47,9 @@ const appRoutes: Routes = [
     AppComponent,
     ListQuoteComponentComponent,
     QuoteComponent,
-    AddQuoteComponentComponent
+    AddQuoteComponentComponent,
+    MigIpsumComponent,
+    SafePipe
   ],
   providers: [ QuoteServiceService, ImageService],
   bootstrap: [AppComponent]
