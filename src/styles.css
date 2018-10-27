@@ -4,6 +4,12 @@ body {
     background-color: #333;
 }
 
+html,
+body,
+#bg[_ngcontent-c1] {
+    min-height: 650px;
+}
+
 html body *,
 html body button.btn.btn-link {
     font-family: "Andale Mono", Arial, sans-serif !important;
