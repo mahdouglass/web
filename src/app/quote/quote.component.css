@@ -141,3 +141,22 @@ button#up:active {
 	transform: scale(0.9);
 	transition-duration: 0s;
 }
+
+@media (max-width: 600px) {
+	button#ipsum{
+		top: 15px;
+		right: 28%;
+	}
+	button#admin {
+		top: 15px;
+		left: 15px;
+	}
+	button#share{
+		top: 15px;
+		right: 15px;
+	}
+	button#up {
+		top: 15px;
+		left: 28%;
+	}
+}
